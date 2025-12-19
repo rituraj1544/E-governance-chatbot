@@ -14,7 +14,13 @@ function isValidObjectId(id) {
  */
 function normalizeArrayField(arr) {
   if (!Array.isArray(arr)) return [];
-  return [...new Set(arr.map((s) => (typeof s === 'string' ? s.trim() : '').filter(Boolean)).flat())];
+  return [
+    ...new Set(
+      arr
+        .map((s) => (typeof s === 'string' ? s.trim() : ''))
+        .filter(Boolean)
+    ),
+  ];
 }
 
 /**

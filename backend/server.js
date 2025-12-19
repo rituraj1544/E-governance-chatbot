@@ -5,6 +5,8 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 
 const app = express();
+const analyticsRoutes = require('./routes/analyticsRoutes');
+
 
 // Middleware
 app.use(cors());
@@ -18,6 +20,10 @@ app.use('/auth', require('./routes/authRoutes'));
 app.use('/schemes', require('./routes/schemeRoutes'));
 app.use('/faqs', require('./routes/faqRoutes'));
 app.use('/chatbot', require('./routes/chatbotRoutes'));
+app.use('/analytics', analyticsRoutes);
+app.use("/dashboard", require("./routes/dashboardRoutes"));
+
+
 
 
 const PORT = process.env.PORT || 5000;

@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* ---------------- GLOBAL ---------------- */
+
+html,
+body {
+  background-color: #020617;
+  color: #e5e7eb;
+}
+
+/* Smooth font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------------- SCROLLBAR ---------------- */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    rgb(99, 102, 241),
+    rgb(56, 189, 248)
+  );
+  border-radius: 999px;
+}
+
+/* ---------------- FORMS ---------------- */
+input,
+textarea,
+select {
+  @apply bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2 text-sm text-slate-100 outline-none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  @apply ring-2 ring-indigo-500/60 border-indigo-400;
+}
+
+/* ---------------- BUTTONS ---------------- */
+button {
+  @apply transition;
+}
+
+/* ---------------- TABLES ---------------- */
+table {
+  @apply w-full border-collapse text-sm;
+}
+
+thead {
+  @apply bg-slate-900/80;
+}
+
+th {
+  @apply text-left px-4 py-3 border-b border-slate-700 text-slate-300 font-medium;
+}
+
+td {
+  @apply px-4 py-3 border-b border-slate-800 text-slate-200;
+}
+
+tr:hover td {
+  @apply bg-slate-900/60;
+}
+
+/* ---------------- CARDS ---------------- */
+.card {
+  @apply rounded-3xl border border-slate-800/80 bg-slate-950/85 p-5 shadow-xl shadow-slate-950/70;
+}
+
+/* ---------------- HEADINGS ---------------- */
+h1,
+h2,
+h3 {
+  @apply text-slate-100;
+}
+
+h2 {
+  @apply text-xl font-semibold;
+}
+
+h3 {
+  @apply text-base font-semibold;
+}
+
+/* ---------------- HELPERS ---------------- */
+.badge {
+  @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs border;
+}
+
+.badge-indigo {
+  @apply bg-indigo-500/10 border-indigo-500/40 text-indigo-300;
+}
+
+.badge-emerald {
+  @apply bg-emerald-500/10 border-emerald-500/40 text-emerald-300;
+}

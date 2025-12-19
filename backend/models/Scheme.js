@@ -1,80 +1,139 @@
-// models/Scheme.js
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const SchemeSchema = new Schema(
   {
-    schemeName: { type: String, required: true, trim: true },
-    category: { type: String, trim: true, index: true }, // e.g., Agriculture, Health
-    shortDescription: { type: String, trim: true },
-    description: { type: String, trim: true },
-    eligibility: { type: String, trim: true },
-    benefits: { type: String, trim: true },
-    documentsRequired: { type: [String], default: [] },
-    howToApply: { type: String, trim: true },
-    officialLink: { type: String, trim: true },
-    keywords: { type: [String], default: [], index: true },
-    state: { type: String, trim: true, index: true }, // Central / State / optional
+    schemeName: {
+      type: String,
+      required: true,
+      trim: true,
+      index: true,
+    },
+
+    category: {
+      type: String,
+      trim: true,
+      index: true, // Agriculture, Health, etc.
+    },
+
+    shortDescription: {
+      type: String,
+      trim: true,
+    },
+
+    description: {
+      type: String,
+      trim: true,
+    },
+
+    eligibility: {
+      type: String,
+      trim: true,
+    },
+
+    benefits: {
+      type: String,
+      trim: true,
+    },
+
+    documentsRequired: {
+      type: [String],
+      default: [],
+    },
+
+    howToApply: {
+      type: String,
+      trim: true,
+    },
+
+    officialLink: {
+      type: String,
+      trim: true,
+    },
+
+    keywords: {
+      type: [String],
+      default: [],
+      index: true,
+    },
+
+    state: {
+      type: String,
+      trim: true,
+      index: true, // Central / State
+    },
   },
   {
-    timestamps: true, // createdAt, updatedAt
+    timestamps: true,
   }
 );
 
 /**
- * Normalize fields before save:
- * - lowercase category & state
- * - trim and lowercase keywords (unique)
+ * 🔧 Normalize fields before save
+ * - trim category & state
+ * - clean keywords (lowercase, trimmed, unique)
  */
-SchemeSchema.pre('save', function (next) {
-  if (this.category) this.category = this.category.trim();
-  if (this.state) this.state = this.state.trim();
+SchemeSchema.pre("save", async function () {
+  if (this.category) {
+    this.category = this.category.trim();
+  }
+
+  if (this.state) {
+    this.state = this.state.trim();
+  }
 
   if (Array.isArray(this.keywords)) {
-    const cleaned = this.keywords
-      .map((k) => (typeof k === 'string' ? k.trim().toLowerCase() : null))
+    const cleanedKeywords = this.keywords
+      .filter((k) => typeof k === "string")
+      .map((k) => k.trim().toLowerCase())
       .filter(Boolean);
 
-    // remove duplicates while preserving order
-    this.keywords = [...new Set(cleaned)];
+    // Remove duplicates
+    this.keywords = [...new Set(cleanedKeywords)];
   }
-  next();
 });
 
 /**
- * Text index for keyword/keyword-like search.
- * We'll create a compound text index across important fields.
- * (MongoDB allows only one text index per collection.)
+ * 🔍 Text index (ONLY ONE allowed per collection)
  */
 SchemeSchema.index({
-  schemeName: 'text',
-  shortDescription: 'text',
-  description: 'text',
-  keywords: 'text',
+  schemeName: "text",
+  shortDescription: "text",
+  description: "text",
+  keywords: "text",
 });
 
 /**
- * Static helper: search by text + optional category/state filters
- * - q: full-text query (string)
- * - opts: { category, state, limit, skip }
+ * 🔎 Static search helper
+ * @param {string} q - text search
+ * @param {object} opts - filters
  */
 SchemeSchema.statics.search = async function (q, opts = {}) {
   const query = {};
   const { category, state, limit = 20, skip = 0 } = opts;
 
-  // text search if q provided
   if (q && q.trim()) {
     query.$text = { $search: q.trim() };
   }
 
-  if (category) query.category = { $regex: new RegExp(`^${category}$`, 'i') }; // exact-ish match
-  if (state) query.state = { $regex: new RegExp(`^${state}$`, 'i') };
+  if (category) {
+    query.category = new RegExp(`^${category}$`, "i");
+  }
 
-  const projection = q ? { score: { $meta: 'textScore' } } : {};
-  const sort = q ? { score: { $meta: 'textScore' } } : { updatedAt: -1 };
+  if (state) {
+    query.state = new RegExp(`^${state}$`, "i");
+  }
 
-  return this.find(query, projection).sort(sort).skip(skip).limit(limit);
+  const projection = q ? { score: { $meta: "textScore" } } : {};
+  const sort = q
+    ? { score: { $meta: "textScore" } }
+    : { updatedAt: -1 };
+
+  return this.find(query, projection)
+    .sort(sort)
+    .skip(skip)
+    .limit(limit);
 };
 
-module.exports = mongoose.model('Scheme', SchemeSchema);
+module.exports = mongoose.model("Scheme", SchemeSchema);
