@@ -105,7 +105,7 @@ export default function Schemes() {
           Government Schemes
         </h2>
         <p className="text-sm text-slate-400 mt-1">
-          Manage schemes used by JanMitran AI to answer citizens
+          Manage schemes used by E-Governance Chatbot to answer citizens
         </p>
       </div>
 

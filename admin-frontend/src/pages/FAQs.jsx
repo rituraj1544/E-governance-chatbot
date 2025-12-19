@@ -115,7 +115,7 @@ export default function FAQs() {
           FAQs Management
         </h2>
         <p className="text-sm text-slate-400 mt-1">
-          Control how JanMitran AI answers citizen questions
+          Control how E-Governance Chatbot answers citizen questions
         </p>
         <div className="mt-4 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
       </div>

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
-const STORAGE_KEY = "janmitran_chat_v2";
+const STORAGE_KEY = "E-Governance Chatbot_chat_v2";
 
 /* ------------------ HELPERS ------------------ */
 function formatDay(ts) {
@@ -138,7 +138,7 @@ export default function UserChat() {
       <header className="shrink-0 border-b border-slate-800 px-4 py-3 flex justify-between items-center">
         <div>
           <h1 className="font-semibold text-lg flex items-center gap-2">
-            JanMitran <span className="text-indigo-400">AI</span>
+            E-Governance Chatbot <span className="text-indigo-400">AI</span>
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/40 text-emerald-300">
               Govt Verified ✔
             </span>
@@ -172,7 +172,7 @@ export default function UserChat() {
       {/* HERO */}
       <section className="shrink-0 border-b border-slate-800 bg-slate-900/40 px-6 py-4">
         <h2 className="text-sm font-semibold text-indigo-300">
-          What can JanMitran AI do?
+          What can E-Governance Chatbot do?
         </h2>
         <p className="text-xs text-slate-400 max-w-3xl mt-1">
           Get verified guidance on Aadhaar, PAN, PM-Kisan, scholarships, pensions,
@@ -195,7 +195,7 @@ export default function UserChat() {
                 className="flex flex-col items-center text-center gap-4 py-10"
               >
                 <div className="text-indigo-400 text-sm font-semibold">
-                  👋 Welcome to JanMitran AI
+                  👋 Welcome to E-Governance Chatbot
                 </div>
 
                 <p className="text-xs text-slate-400 max-w-md">
@@ -294,7 +294,7 @@ export default function UserChat() {
 
           {loading && (
             <div className="text-xs text-slate-400">
-              JanMitran AI is typing<span className="animate-pulse">|</span>
+              E-Governance Chatbot is typing<span className="animate-pulse">|</span>
             </div>
           )}
 

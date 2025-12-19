@@ -31,7 +31,7 @@ export default function AdminLayout() {
           </div>
           <div>
             <h2 className="text-base font-semibold">
-              JanMitran <span className="text-indigo-400">Admin</span>
+              E-Governance Chatbot <span className="text-indigo-400">Admin</span>
             </h2>
             <p className="text-[11px] text-slate-400">Control Center</p>
           </div>
